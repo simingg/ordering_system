@@ -48,7 +48,7 @@ export default {
                 }
                 else if (item_name == item.name && count == 0) {
                     temp_item = curr_item;
-                    this.$set(this.itemsSelected, i, null)
+                    this.itemsSelected.splice(i, 1);
                 }
                 // if item_name is the same as item.name and the count is more than 0, update this.itemsSelected
                 // otherwise, if the item is not in itemSelected, add it to itemsSelected by pushing the ORDER in.
