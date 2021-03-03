@@ -1,0 +1,29 @@
+<template>
+  <div id="app">
+    <h1> Thai Food </h1>
+    <app-header> </app-header>
+    <router-view>
+    </router-view>
+  </div>
+</template>
+
+<script>
+import Header from './components/Header.vue'
+export default {
+  name: 'App',
+  components: {
+     'app-header':Header,
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
