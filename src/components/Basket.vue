@@ -4,13 +4,15 @@
         <ul v-for="itemS in selected" v-bind:key="itemS">
             {{itemS[0]}} x {{ itemS[1] }}
         </ul>
-        <button v-on:click="findTotal"> Total Cost </button>
+        <button v-on:click="findTotal(); sendOrder()"> Total Cost </button>
         <p v-show="clicked"> Subtotal: {{subtotal}} </p>
         <p v-show="clicked"> Grand Total: {{ grandTotal }} </p>
     </div>
 </template>
 
 <script>
+import database from '../firebase.js'
+
 export default {
     name: 'Basket',
     props: {
@@ -25,6 +27,17 @@ export default {
         }
     },
     methods: {
+        sendOrder: function() {
+            let push_item = []
+            for (let i = 0; i < this.selected.length; i++) {
+                console.log(this.selected);
+                push_item.push({
+                name: this.selected[i][0],
+                count: this.selected[i][1],
+                });
+            }
+            database.collection('orders').add( {push_item}).then(() => {location.reload() });
+        },
         findTotal: function() {
             if (this.clicked == false) {
             for (let i = 0; i < this.selected.length; i++) {

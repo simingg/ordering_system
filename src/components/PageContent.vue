@@ -15,23 +15,29 @@
 <script>
 import QuantityCounter from './QuantityCounter.vue'
 import Basket from './Basket.vue'
+import database from '../firebase.js'
+
 export default {
     name: 'PageContent',
     components: {
         QuantityCounter,
         Basket,
     },
-    props: {
-        items: {
-            type: Array
-        }
-    },
     data() {
         return {
          itemsSelected: [],
+         items: [],
          }
     },
     methods: {
+        fetchItems: function() {
+            database.collection('menu').get().then((snapshot) => {
+            let item ={}
+            snapshot.docs.forEach(doc => {
+            item = doc.data()
+            this.items.push(item)
+            })})
+        },
         onCounter: function (item, count) {
             if (this.itemsSelected.length === 0 && count > 0) {
                 //If there is nothing in items selected, push the ORDER in
@@ -49,7 +55,7 @@ export default {
                 }
                 else if (item_name == item.name && count == 0) {
                     temp_item = curr_item;
-                    this.$set(this.itemsSelected, i, null)
+                    this.itemsSelected.splice(i, 1);
                 }
                 // if item_name is the same as item.name and the count is more than 0, update this.itemsSelected
                 // otherwise, if the item is not in itemSelected, add it to itemsSelected by pushing the ORDER in.
@@ -59,6 +65,9 @@ export default {
                 }
             }
         }
+    },
+    created() {
+        this.fetchItems()
     }
 }
 </script>
