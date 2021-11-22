@@ -1,5 +1,5 @@
 # test-project
-
+basic online ordering system for a thai food restaurant
 ## Project setup
 ```
 npm install
